@@ -73,7 +73,7 @@ describe OpencJsonSchemaFormats do
     end
 
     context 'valid uris' do
-      ["http://foo.bar/?baz=qux#quux", "https://foo.bar/?baz=qux#quux"].each do |uri|
+      ["http://foo.bar/?baz=qux#quux", "https://foo.bar/?baz=qux#quux", "ftp://foo.com"].each do |uri|
         it "returns true for `#{uri}`" do
           expect(@validator.validate(uri)).to eq(true)
         end
@@ -81,7 +81,7 @@ describe OpencJsonSchemaFormats do
     end
 
     context 'invalid uris' do
-      ["\\\\WINDOWS\\fileshare", "tofu", "http://foo.b::ar/?baz=qux#quux"].each do |uri|
+      ["\\\\WINDOWS\\fileshare", "tofu", "foo.com"].each do |uri|
         it "returns false for `#{uri}`" do
           expect(@validator.validate(uri)).to eq(false)
         end

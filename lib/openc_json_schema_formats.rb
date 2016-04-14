@@ -3,6 +3,8 @@ require "json_validation"
 require "uri"
 
 module OpencJsonSchemaFormats
+  # From https://mathiasbynens.be/demo/url-regex
+  URI_REGEX = Regexp.new("^(https?|ftp)://[^\s/$.?#].[^\s]*$", Regexp::IGNORECASE)
   class DateFormatValidator
     def validate(record)
       Date.strptime(record, '%Y-%m-%d')
@@ -31,12 +33,7 @@ module OpencJsonSchemaFormats
     # Actually, this only checks http and https formats, so isn't
     # really for URIs
     def validate(record)
-      begin
-        uri = URI.parse(record)
-        uri.kind_of?(URI::HTTP) || uri.kind_of?(URI::HTTPS)
-      rescue URI::InvalidURIError
-        false
-      end
+      record =~ URI_REGEX
     end
   end
 end
