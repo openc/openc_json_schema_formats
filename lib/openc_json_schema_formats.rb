@@ -12,6 +12,15 @@ module OpencJsonSchemaFormats
     end
   end
 
+  class DateTimeFormatValidator
+    def validate(record)
+      Date.parse(record)
+      true
+    rescue ArgumentError
+      false
+    end
+  end
+
   class NonBlankValidator
     def validate(record)
       !(record.is_a?(String) && record.strip == '')
@@ -34,6 +43,9 @@ end
 
 JsonValidation.add_format_validator(
   'date', OpencJsonSchemaFormats::DateFormatValidator)
+
+JsonValidation.add_format_validator(
+  'date-time', OpencJsonSchemaFormats::DateFormatValidator)
 
 JsonValidation.add_format_validator(
   'non-blank', OpencJsonSchemaFormats::NonBlankValidator)

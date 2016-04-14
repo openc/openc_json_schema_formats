@@ -27,6 +27,28 @@ describe OpencJsonSchemaFormats do
     end
   end
 
+  describe 'date-time format validator' do
+    before do
+      @validator = JsonValidation.build_validator({'format' => 'date-time'}, strict_format_validation: true)
+    end
+
+    context 'valid dates' do
+      ['2011-01-03', '1963-06-19T08:30:06.283185Z'].each do |date|
+        it "returns true for `#{date}`" do
+          expect(@validator.validate(date)).to eq(true)
+        end
+      end
+    end
+
+    context 'invalid dates' do
+      ['2011-02-31', '06/19/1963 08:30:06 PST', 'zzz'].each do |date|
+        it "returns false for `#{date}`" do
+          expect(@validator.validate(date)).to eq(false)
+        end
+      end
+    end
+  end
+
   describe 'nonblank validator' do
     before do
       @validator = JsonValidation.build_validator({'format' => 'non-blank'}, strict_format_validation: true)
