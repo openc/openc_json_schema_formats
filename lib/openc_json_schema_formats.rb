@@ -4,7 +4,7 @@ require "json_validation"
 module OpencJsonSchemaFormats
   class DateFormatValidator
     def validate(record)
-      Date.parse(record)
+      Date.strptime(record, '%Y-%m-%d')
       true
     rescue ArgumentError
       false
